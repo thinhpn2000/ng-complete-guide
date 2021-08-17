@@ -1,9 +1,6 @@
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import * as ShoppingListActions from './shopping-list.action';
 
-export interface AppState {
-    shoppingList : State
-}
 export interface State{
     ingredients: Ingredient[],
     editedIngredient: Ingredient,
@@ -33,14 +30,14 @@ export function shoppingListReducer(state = initialState, action : ShoppingListA
             };
         }
         case ShoppingListActions.UPDATE_INGREDIENT: {
-            const ingredient = state.ingredients[action.payload.index];
+            const ingredient = state.ingredients[state.editedIngredientIndex];
             
             const updateIngredient = {
                 ...ingredient,
-                ...action.payload.ingredient
+                ...action.payload
             }
             const updateIngredients = [...state.ingredients];
-            updateIngredients[action.payload.index] = updateIngredient;
+            updateIngredients[state.editedIngredientIndex] = updateIngredient;
             return {
                 ...state,
                 ingredients: updateIngredients
@@ -51,7 +48,7 @@ export function shoppingListReducer(state = initialState, action : ShoppingListA
             return {
                 ...state,
                 ingredients: state.ingredients.filter( (ingre, ingreIndex) => {
-                    return ingreIndex !== action.payload;
+                    return ingreIndex !== state.editedIngredientIndex;
                 })
             };
         }

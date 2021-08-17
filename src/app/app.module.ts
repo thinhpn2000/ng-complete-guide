@@ -17,7 +17,7 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeService } from './recipes/recipe.service';
 import { StoreModule } from '@ngrx/store';
-import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer'
+import * as fromAppReducer from './store/app.reducer';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,7 @@ import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({shoppingList : shoppingListReducer})
+    StoreModule.forRoot(fromAppReducer.appReducer)
   ],
   providers: [ShoppingListService,RecipeService],
   bootstrap: [AppComponent]
